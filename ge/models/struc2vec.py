@@ -106,14 +106,14 @@ class Struc2Vec():
         pd.to_pickle(average_weight, self.temp_path + 'average_weight')
         pd.to_pickle(gamma, self.temp_path + 'gamma.pkl')
 
-    def train(self, embed_size=128, window_size=5, workers=3, iter=5):
+    def train(self, embed_size=128, window_size=5, workers=3, epochs=5):
 
         # pd.read_pickle(self.temp_path+'walks.pkl')
         sentences = self.sentences
 
         print("Learning representation...")
-        model = Word2Vec(sentences, size=embed_size, window=window_size, min_count=0, hs=1, sg=1, workers=workers,
-                         iter=iter)
+        model = Word2Vec(sentences, vector_size=embed_size, window=window_size, min_count=0, hs=1, sg=1, workers=workers,
+                         epochs=epochs)
         print("Learning representation done!")
         self.w2v_model = model
 
