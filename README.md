@@ -63,7 +63,7 @@ we use `networkx`to create graphs.The input of networkx graph is as follows:
 G = nx.read_edgelist('../data/wiki/Wiki_edgelist.txt',create_using=nx.DiGraph(),nodetype=None,data=[('weight',int)])# Read graph
 
 model = DeepWalk(G,walk_length=10,num_walks=80,workers=1)#init model
-model.train(window_size=5,iter=3)# train model
+model.train(window_size=5, epochs=3)# train model
 embeddings = model.get_embeddings()# get embedding vectors
 ```
 
@@ -73,7 +73,7 @@ embeddings = model.get_embeddings()# get embedding vectors
 G = nx.read_edgelist('../data/wiki/Wiki_edgelist.txt',create_using=nx.DiGraph(),nodetype=None,data=[('weight',int)])#read graph
 
 model = LINE(G,embedding_size=128,order='second') #init model,order can be ['first','second','all']
-model.train(batch_size=1024,epochs=50,verbose=2)# train model
+model.train(batch_size=1024, epochs=50, verbose=2)# train model
 embeddings = model.get_embeddings()# get embedding vectors
 ```
 ## Node2Vec
@@ -82,7 +82,7 @@ G=nx.read_edgelist('../data/wiki/Wiki_edgelist.txt',
                         create_using = nx.DiGraph(), nodetype = None, data = [('weight', int)])#read graph
 
 model = Node2Vec(G, walk_length = 10, num_walks = 80,p = 0.25, q = 4, workers = 1)#init model
-model.train(window_size = 5, iter = 3)# train model
+model.train(window_size = 5, epochs = 3)# train model
 embeddings = model.get_embeddings()# get embedding vectors
 ```
 ## SDNE
@@ -91,7 +91,7 @@ embeddings = model.get_embeddings()# get embedding vectors
 G = nx.read_edgelist('../data/wiki/Wiki_edgelist.txt',create_using=nx.DiGraph(),nodetype=None,data=[('weight',int)])#read graph
 
 model = SDNE(G,hidden_size=[256,128]) #init model
-model.train(batch_size=3000,epochs=40,verbose=2)# train model
+model.train(batch_size=3000, epochs=40, verbose=2)# train model
 embeddings = model.get_embeddings()# get embedding vectors
 ```
 
@@ -102,6 +102,6 @@ embeddings = model.get_embeddings()# get embedding vectors
 G = nx.read_edgelist('../data/flight/brazil-airports.edgelist',create_using=nx.DiGraph(),nodetype=None,data=[('weight',int)])#read graph
 
 model = model = Struc2Vec(G, 10, 80, workers=4, verbose=40, ) #init model
-model.train(window_size = 5, iter = 3)# train model
+model.train(window_size = 5, epochs = 3)# train model
 embeddings = model.get_embeddings()# get embedding vectors
 ```
