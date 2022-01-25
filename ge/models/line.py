@@ -49,10 +49,11 @@ def create_model(numNodes, embedding_size, order='second'):
     v_i_emb_second = second_emb(v_i)
     v_j_context_emb = context_emb(v_j)
 
-    first = Lambda(lambda x: tf.reduce_sum(
-        x[0]*x[1], axis=-1, keep_dims=False), name='first_order')([v_i_emb, v_j_emb])
-    second = Lambda(lambda x: tf.reduce_sum(
-        x[0]*x[1], axis=-1, keep_dims=False), name='second_order')([v_i_emb_second, v_j_context_emb])
+    first = Lambda(lambda x: tf.compat.v1.reduce_sum(
+                    x[0]*x[1], axis=-1, keep_dims=False), name='first_order')([v_i_emb, v_j_emb])
+
+    second = Lambda(lambda x: tf.compat.v1.reduce_sum(
+                     x[0]*x[1], axis=-1, keep_dims=False), name='second_order')([v_i_emb_second, v_j_context_emb])
 
     if order == 'first':
         output_list = [first]
@@ -69,7 +70,6 @@ def create_model(numNodes, embedding_size, order='second'):
 class LINE:
     def __init__(self, graph, embedding_size=8, negative_ratio=5, order='second',):
         """
-
         :param graph:
         :param embedding_size:
         :param negative_ratio:
@@ -102,14 +102,11 @@ class LINE:
             (self.samples_per_epoch - 1) // self.batch_size + 1)*times
 
     def reset_model(self, opt='adam'):
-
-        self.model, self.embedding_dict = create_model(
-            self.node_size, self.rep_size, self.order)
+        self.model, self.embedding_dict = create_model(self.node_size, self.rep_size, self.order)
         self.model.compile(opt, line_loss)
         self.batch_it = self.batch_iter(self.node2idx)
 
     def _gen_sampling_table(self):
-
         # create sampling table for vertex
         power = 0.75
         numNodes = self.node_size

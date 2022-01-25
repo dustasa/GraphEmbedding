@@ -21,7 +21,6 @@ def evaluate_embeddings(embeddings):
 
 def plot_embeddings(embeddings,):
     X, Y = read_node_label('../data/wiki/wiki_labels.txt')
-
     emb_list = []
     for k in X:
         emb_list.append(embeddings[k])
