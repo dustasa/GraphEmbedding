@@ -1,4 +1,3 @@
-
 import numpy as np
 
 from ge.classify import read_node_label, Classifier
@@ -19,7 +18,7 @@ def evaluate_embeddings(embeddings):
     clf.split_train_evaluate(X, Y, tr_frac)
 
 
-def plot_embeddings(embeddings,):
+def plot_embeddings(embeddings, ):
     X, Y = read_node_label('../data/wiki/wiki_labels.txt')
 
     emb_list = []
@@ -42,12 +41,12 @@ def plot_embeddings(embeddings,):
 
 
 if __name__ == "__main__":
-    G=nx.read_edgelist('../data/wiki/Wiki_edgelist.txt',
-                         create_using = nx.DiGraph(), nodetype = None, data = [('weight', int)])
+    G = nx.read_edgelist('../data/wiki/Wiki_edgelist.txt',
+                         create_using=nx.DiGraph(), nodetype=None, data=[('weight', int)])
     model = Node2Vec(G, walk_length=10, num_walks=80,
                      p=0.25, q=4, workers=1, use_rejection_sampling=0)
-    model.train(window_size = 5, iter = 3)
-    embeddings=model.get_embeddings()
+    model.train(window_size=5, epochs=3)
+    embeddings = model.get_embeddings()
 
     evaluate_embeddings(embeddings)
     plot_embeddings(embeddings)
