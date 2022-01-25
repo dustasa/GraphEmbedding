@@ -34,16 +34,16 @@ class DeepWalk:
         self.sentences = self.walker.simulate_walks(
             num_walks=num_walks, walk_length=walk_length, workers=workers, verbose=1)
 
-    def train(self, embed_size=128, window_size=5, workers=3, iter=5, **kwargs):
+    def train(self, embed_size=128, window_size=5, workers=3, epochs=5, **kwargs):
 
         kwargs["sentences"] = self.sentences
         kwargs["min_count"] = kwargs.get("min_count", 0)
-        kwargs["size"] = embed_size
+        kwargs["vector_size"] = embed_size
         kwargs["sg"] = 1  # skip gram
         kwargs["hs"] = 1  # deepwalk use Hierarchical Softmax
         kwargs["workers"] = workers
         kwargs["window"] = window_size
-        kwargs["iter"] = iter
+        kwargs["epochs"] = epochs
 
         print("Learning embedding vectors...")
         model = Word2Vec(**kwargs)
